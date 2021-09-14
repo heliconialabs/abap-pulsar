@@ -3,12 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "pulsar",
-  "dependencies": {},
   "scripts": {
     "lint": "abaplint",
     "unit": "rm -rf output && abap_transpile && echo RUNNING && node output/index.mjs",
     "test": "npm run lint && npm run downport && npm run unit",
-    "downport": "rm -rf downport && cp src -r downport && abaplint --fix abaplint_downport.json"
+    "downport": "rm -rf downport && cp src -r downport && abaplint --fix abaplint_downport.json",
+    "integration:setup": "ts-node ./test/setup.ts"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,11 @@
   "devDependencies": {
     "@abaplint/cli": "^2.78.13",
     "@abaplint/runtime": "^1.6.28",
-    "@abaplint/transpiler-cli": "^1.6.28"
+    "@abaplint/transpiler-cli": "^1.6.28",
+    "@types/node": "^16.9.1",
+    "ts-node": "^10.2.1"
+  },
+  "dependencies": {
+    "typescript": "^4.4.3"
   }
 }
