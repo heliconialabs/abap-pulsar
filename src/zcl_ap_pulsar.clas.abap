@@ -1,0 +1,8 @@
+CLASS zcl_ap_pulsar DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES zif_ap_pulsar.
+ENDCLASS.
+
+CLASS zcl_ap_pulsar IMPLEMENTATION.
+
+ENDCLASS.
