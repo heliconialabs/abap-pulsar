@@ -8,7 +8,12 @@
   "dependencies": [
     {
       "url": "https://github.com/open-abap/open-abap",
-      "folder": "/deps",
+      "folder": "/deps1",
+      "files": "/src/**/*.*"
+    },
+    {
+      "url": "https://github.com/heliconialabs/abap-protobuf",
+      "folder": "/deps2",
       "files": "/src/**/*.*"
     }
   ],
@@ -83,7 +88,7 @@
     "chain_mainly_declarations": true,
     "check_abstract": true,
     "check_text_elements": true,
-    "types_naming": true,
+    "types_naming": false,
     "7bit_ascii": true,
     "abapdoc": false,
     "check_ddic": true,
@@ -127,7 +132,7 @@
     "max_one_statement": true,
     "message_exists": true,
     "method_length": true,
-    "method_parameter_names": true,
+    "method_parameter_names": false,
     "mix_returning": true,
     "msag_consistency": true,
     "nesting": true,

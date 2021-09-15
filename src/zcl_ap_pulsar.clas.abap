@@ -33,6 +33,12 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
     ri_pulsar = lo_pulsar.
   ENDMETHOD.
 
+  METHOD zif_ap_pulsar~connect.
+* https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto#L262
+* https://pulsar.apache.org/docs/en/develop-binary-protocol/#connection-establishment
+    RETURN. " todo
+  ENDMETHOD.
+
   METHOD zif_ap_pulsar~close.
     mi_client->close( ).
   ENDMETHOD.

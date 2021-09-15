@@ -7,7 +7,7 @@
     "lint": "abaplint",
     "unit": "rm -rf output && abap_transpile && echo RUNNING && node output/index.mjs",
     "test": "npm run lint && npm run downport && npm run unit",
-    "downport": "rm -rf downport && cp src -r downport && abaplint --fix abaplint_downport.json",
+    "downport": "rm -rf downport && rm -rf deps2 && git clone --quiet https://github.com/heliconialabs/abap-protobuf deps2 && cp deps2/src -r downport && cp src/* -r downport && rm downport/zcl_protobuf*testclasses* && abaplint --fix abaplint_downport.json",
     "integration:setup": "ts-node ./test/setup.ts"
   },
   "repository": {
