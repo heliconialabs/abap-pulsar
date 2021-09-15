@@ -3,8 +3,6 @@ CLASS zcl_ap_pulsar_protobuf DEFINITION PUBLIC.
 * https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto#L262
     TYPES: BEGIN OF command_connect,
               client_version   TYPE string,  " field 1
-              auth_method_name TYPE string,  " field 5
-              auth_data        TYPE xstring, " field 3
               protocol_version TYPE i,       " field 4
            END OF command_connect.
     METHODS command_connect_serialize
@@ -19,11 +17,20 @@ CLASS zcl_ap_pulsar_protobuf IMPLEMENTATION.
 
   METHOD command_connect_serialize.
     ASSERT input-client_version IS NOT INITIAL.
-* todo
 
-    zcl_protobuf=>create( ).
+    DATA(li_stream) = NEW zcl_protobuf_stream( ).
 
-    WRITE / output.
+    li_stream->encode_field_and_type( VALUE #(
+      field_number = 1
+      wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ) ).
+    li_stream->encode_delimited( cl_abap_codepage=>convert_to( input-client_version ) ).
+
+    li_stream->encode_field_and_type( VALUE #(
+      field_number = 4
+      wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ) ).
+    li_stream->encode_varint( input-protocol_version ).
+
+    output = li_stream->get( ).
   ENDMETHOD.
 
   METHOD command_connect_deserialize.
