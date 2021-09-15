@@ -3,6 +3,8 @@ import { promisify } from 'util';
 const asyncExec = promisify(exec);
 import path from 'path';
 
+// https://pulsar.apache.org/docs/en/standalone-docker/
+
 const standaloneWaitTime = 60000;
 
 console.log(`Setting up pulsar standalone`);
