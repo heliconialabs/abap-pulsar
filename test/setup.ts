@@ -1,9 +1,9 @@
-import { exec } from 'child_process';
+import { exec, execSync } from 'child_process';
 import { promisify } from 'util';
 const asyncExec = promisify(exec);
 import path from 'path';
 
-const standaloneWaitTime = 120000;
+const standaloneWaitTime = 60000;
 
 console.log(`Setting up pulsar standalone`);
 
@@ -24,19 +24,21 @@ console.log(`Setting up pulsar standalone`);
     // not found, ok
   }
 
+  execSync("docker pull apachepulsar/pulsar:2.8.0", {stdio: "inherit"});
+
   const dockerComposeFilePath = path.join(__dirname, `docker-compose.yml`);
 
   console.log(`Creating pulsar via docker-compose from path ${dockerComposeFilePath}`);
 
-  asyncExec(`docker-compose -f ${dockerComposeFilePath} up`)
-    .then(() => console.log('docker-compose gracefully shut down'))
+  asyncExec(`docker-compose -f ${dockerComposeFilePath} up --build`)
+    .then((m) => {console.dir(m); console.log('docker-compose gracefully shut down');})
     .catch((e) => console.log(`docker-compose killed ${e}`));
 
   console.log(`Waiting ${standaloneWaitTime}ms for pulsar-standalone to start`);
 
   await new Promise((resolve) => setTimeout(resolve, standaloneWaitTime));
 
-  console.log(`Validating pulsar is up still up after waiting`);
+  console.log(`Validating pulsar is up`);
 
   const { stdout } = await asyncExec(`docker ps`);
 

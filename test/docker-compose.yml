@@ -11,11 +11,5 @@ services:
       - 6650
     environment:
       allowAutoTopicCreation: "false"
-      authenticationEnabled: "true"
-      authenticationProviders: "org.apache.pulsar.broker.authentication.AuthenticationProviderToken"
-      authorizationEnabled: "true"
-      acknowledgmentAtBatchIndexLevelEnabled: "true"
-      brokerClientAuthenticationPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationToken"
-      brokerClientTlsEnabled: "false"
-      superUserRoles: "admin"
+      authenticationEnabled: "false"
       PULSAR_MEM: " -Xms128m -Xmx128m -XX:MaxDirectMemorySize=128m"
