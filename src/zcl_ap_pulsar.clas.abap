@@ -18,14 +18,13 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
   METHOD connect.
     DATA ls_frame TYPE if_apc_tcp_frame_types=>ty_frame_type.
 
-    WRITE iv_host.
-    WRITE iv_port.
-
     DATA(lo_pulsar) = NEW zcl_ap_pulsar( ).
 
+* todo, set ls_frame
+
     lo_pulsar->mi_client = cl_apc_tcp_client_manager=>create(
-      i_host          = 'localhost'
-      i_port          = 6650
+      i_host          = iv_host
+      i_port          = iv_port
       i_frame         = ls_frame
       i_event_handler = lo_pulsar ).
 

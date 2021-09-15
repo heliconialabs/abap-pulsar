@@ -5,7 +5,10 @@ ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
   METHOD test1.
-    WRITE 'hello world'.
-    RETURN. " todo
+    DATA(li_pulsar) = zcl_ap_pulsar=>connect(
+      iv_host = 'localhost'
+      iv_port = 6650 ).
+
+    li_pulsar->close( ).
   ENDMETHOD.
 ENDCLASS.
