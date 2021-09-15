@@ -9,6 +9,9 @@ CLASS ltcl_test IMPLEMENTATION.
       iv_host = 'localhost'
       iv_port = 6650 ).
 
+* send connect command
+    li_pulsar->connect( ).
+
     li_pulsar->close( ).
   ENDMETHOD.
 ENDCLASS.

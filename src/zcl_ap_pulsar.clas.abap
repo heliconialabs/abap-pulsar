@@ -36,7 +36,22 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
   METHOD zif_ap_pulsar~connect.
 * https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto#L262
 * https://pulsar.apache.org/docs/en/develop-binary-protocol/#connection-establishment
-    RETURN. " todo
+
+    DATA lv_total_size   TYPE x LENGTH 4.
+    DATA lv_command_size TYPE x LENGTH 4.
+
+    DATA(lv_message) = NEW zcl_ap_pulsar_protobuf( )->command_connect_serialize( VALUE #(
+      client_version   = 'abap-pulsar'
+      protocol_version = 17 ) ).
+    lv_command_size = xstrlen( lv_message ).
+    lv_total_size = lv_command_size + 4.
+
+    CONCATENATE lv_total_size lv_command_size lv_message INTO lv_message IN BYTE MODE.
+
+    WRITE / lv_message.
+
+* todo
+
   ENDMETHOD.
 
   METHOD zif_ap_pulsar~close.
