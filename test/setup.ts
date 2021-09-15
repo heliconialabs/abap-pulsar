@@ -5,7 +5,7 @@ import path from 'path';
 
 // https://pulsar.apache.org/docs/en/standalone-docker/
 
-const standaloneWaitTime = 60000;
+const standaloneWaitTime = 20000;
 
 console.log(`Setting up pulsar standalone`);
 
