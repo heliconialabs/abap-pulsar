@@ -1,0 +1,33 @@
+{
+  "name": "abap-pulsar",
+  "private": true,
+  "version": "1.0.0",
+  "description": "pulsar",
+  "scripts": {
+    "lint": "abaplint",
+    "unit": "rm -rf output && abap_transpile && echo RUNNING && node output/index.mjs",
+    "test": "npm run lint && npm run downport && npm run unit",
+    "downport": "rm -rf downport && rm -rf deps2 && git clone --quiet https://github.com/heliconialabs/abap-protobuf deps2 && cp deps2/src -r downport && cp src/* -r downport && rm downport/zcl_protobuf*testclasses* && abaplint --fix abaplint_downport.json",
+    "integration:setup": "ts-node ./test/setup.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heliconialabs/abap-pulsar.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heliconialabs/abap-pulsar/issues"
+  },
+  "homepage": "https://github.com/heliconialabs/abap-pulsar#readme",
+  "devDependencies": {
+    "@abaplint/cli": "^2.79.2",
+    "@abaplint/runtime": "^1.6.28",
+    "@abaplint/transpiler-cli": "^1.6.28",
+    "@types/node": "^16.9.2",
+    "ts-node": "^10.2.1"
+  },
+  "dependencies": {
+    "typescript": "^4.4.3"
+  }
+}

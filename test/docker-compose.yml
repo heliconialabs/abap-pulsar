@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+  pulsar-standalone-abap-pulsar:
+    container_name: pulsar-standalone-abap-pulsar
+    build: .
+    ports:
+      - '8080:8080'
+      - '6650:6650'
+    expose:
+      - 8080
+      - 6650
+    environment:
+      allowAutoTopicCreation: "false"
+      authenticationEnabled: "false"
+      PULSAR_MEM: " -Xms128m -Xmx128m -XX:MaxDirectMemorySize=128m"
