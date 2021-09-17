@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/heliconialabs/abap-pulsar#readme",
   "devDependencies": {
-    "@abaplint/cli": "^2.79.1",
+    "@abaplint/cli": "^2.79.2",
     "@abaplint/runtime": "^1.6.28",
     "@abaplint/transpiler-cli": "^1.6.28",
-    "@types/node": "^16.9.1",
+    "@types/node": "^16.9.2",
     "ts-node": "^10.2.1"
   },
   "dependencies": {
