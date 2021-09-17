@@ -79,13 +79,13 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD if_apc_wsp_event_handler~on_message.
-    WRITE / 'on_message'.
+    WRITE / 'on_message, received:'.
     mv_on_message = i_message->get_binary( ).
     WRITE / mv_on_message.
   ENDMETHOD.
 
   METHOD if_apc_wsp_event_handler~on_close.
-    RETURN.
+    WRITE / 'on_close'.
   ENDMETHOD.
 
   METHOD if_apc_wsp_event_handler~on_error.
