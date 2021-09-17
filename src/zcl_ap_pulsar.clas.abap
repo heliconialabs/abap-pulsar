@@ -12,6 +12,8 @@ CLASS zcl_ap_pulsar DEFINITION PUBLIC CREATE PRIVATE.
         cx_static_check.
   PRIVATE SECTION.
     DATA mi_client TYPE REF TO if_apc_wsp_client.
+    DATA mv_on_message TYPE xstring.
+    METHODS send IMPORTING iv_message TYPE xstring.
 ENDCLASS.
 
 CLASS zcl_ap_pulsar IMPLEMENTATION.
@@ -48,9 +50,23 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
 
     CONCATENATE lv_total_size lv_command_size lv_message INTO lv_message IN BYTE MODE.
 
-    WRITE / lv_message.
+    send( lv_message ).
 
-* todo
+  ENDMETHOD.
+
+  METHOD send.
+
+    DATA li_message_manager TYPE REF TO if_apc_wsp_message_manager.
+    DATA li_message         TYPE REF TO if_apc_wsp_message.
+
+    li_message_manager = mi_client->get_message_manager( ).
+    li_message = li_message_manager->create_message( ).
+    li_message->set_binary( iv_message ).
+    li_message_manager->send( li_message ).
+
+    WAIT FOR PUSH CHANNELS
+      UNTIL mv_on_message IS NOT INITIAL
+      UP TO 10 SECONDS.
 
   ENDMETHOD.
 
@@ -60,12 +76,12 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
 
   METHOD if_apc_wsp_event_handler~on_open.
     WRITE / 'on_open'.
-    RETURN.
   ENDMETHOD.
 
   METHOD if_apc_wsp_event_handler~on_message.
     WRITE / 'on_message'.
-* sdf   message = i_message->get_binary( ).
+    mv_on_message = i_message->get_binary( ).
+    WRITE / mv_on_message.
   ENDMETHOD.
 
   METHOD if_apc_wsp_event_handler~on_close.
