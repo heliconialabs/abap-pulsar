@@ -4,12 +4,13 @@ CLASS zcl_ap_pulsar DEFINITION PUBLIC CREATE PRIVATE.
     INTERFACES if_apc_wsp_event_handler.
     CLASS-METHODS connect
       IMPORTING
-        iv_host TYPE string
-        iv_port TYPE string
+        iv_host          TYPE string
+        iv_port          TYPE string
       RETURNING
         VALUE(ri_pulsar) TYPE REF TO zif_ap_pulsar
       RAISING
         cx_static_check.
+  PROTECTED SECTION.
   PRIVATE SECTION.
     DATA mi_client TYPE REF TO if_apc_wsp_client.
     DATA mv_on_message TYPE xstring.
@@ -20,7 +21,11 @@ CLASS zcl_ap_pulsar DEFINITION PUBLIC CREATE PRIVATE.
         cx_apc_error.
 ENDCLASS.
 
-CLASS zcl_ap_pulsar IMPLEMENTATION.
+
+
+CLASS ZCL_AP_PULSAR IMPLEMENTATION.
+
+
   METHOD connect.
     DATA ls_frame TYPE if_abap_channel_types=>ty_apc_tcp_frame.
 
@@ -39,24 +44,31 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
     ri_pulsar = lo_pulsar.
   ENDMETHOD.
 
-  METHOD zif_ap_pulsar~connect.
-* https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto#L262
-* https://pulsar.apache.org/docs/en/develop-binary-protocol/#connection-establishment
 
-    DATA lv_total_size   TYPE x LENGTH 4.
-    DATA lv_command_size TYPE x LENGTH 4.
-
-    DATA(lv_message) = NEW zcl_ap_pulsar_protobuf( )->command_connect_serialize( VALUE #(
-      client_version   = 'abap-pulsar'
-      protocol_version = 17 ) ).
-    lv_command_size = xstrlen( lv_message ).
-    lv_total_size = lv_command_size + 4.
-
-    CONCATENATE lv_total_size lv_command_size lv_message INTO lv_message IN BYTE MODE.
-
-    send( lv_message ).
-
+  METHOD if_apc_wsp_event_handler~on_close.
+    WRITE / 'on_close'.
   ENDMETHOD.
+
+
+  METHOD if_apc_wsp_event_handler~on_error.
+    WRITE / 'on_error'.
+  ENDMETHOD.
+
+
+  METHOD if_apc_wsp_event_handler~on_message.
+    WRITE / 'on_message, received:'.
+    TRY.
+        mv_on_message = i_message->get_binary( ).
+      CATCH cx_root.
+    ENDTRY.
+    WRITE / mv_on_message.
+  ENDMETHOD.
+
+
+  METHOD if_apc_wsp_event_handler~on_open.
+    WRITE / 'on_open'.
+  ENDMETHOD.
+
 
   METHOD send.
 
@@ -74,25 +86,28 @@ CLASS zcl_ap_pulsar IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD zif_ap_pulsar~close.
     mi_client->close( ).
   ENDMETHOD.
 
-  METHOD if_apc_wsp_event_handler~on_open.
-    WRITE / 'on_open'.
-  ENDMETHOD.
 
-  METHOD if_apc_wsp_event_handler~on_message.
-    WRITE / 'on_message, received:'.
-    mv_on_message = i_message->get_binary( ).
-    WRITE / mv_on_message.
-  ENDMETHOD.
+  METHOD zif_ap_pulsar~connect.
+* https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto#L262
+* https://pulsar.apache.org/docs/en/develop-binary-protocol/#connection-establishment
 
-  METHOD if_apc_wsp_event_handler~on_close.
-    WRITE / 'on_close'.
-  ENDMETHOD.
+    DATA lv_total_size   TYPE x LENGTH 4.
+    DATA lv_command_size TYPE x LENGTH 4.
 
-  METHOD if_apc_wsp_event_handler~on_error.
-    WRITE / 'on_error'.
+    DATA(lv_message) = NEW zcl_ap_pulsar_protobuf( )->command_connect_serialize( VALUE #(
+      client_version   = 'abap-pulsar'
+      protocol_version = 17 ) ).
+    lv_command_size = xstrlen( lv_message ).
+    lv_total_size = lv_command_size + 4.
+
+    CONCATENATE lv_total_size lv_command_size lv_message INTO lv_message IN BYTE MODE.
+
+    send( lv_message ).
+
   ENDMETHOD.
 ENDCLASS.
