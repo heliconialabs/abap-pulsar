@@ -13,7 +13,11 @@ CLASS zcl_ap_pulsar DEFINITION PUBLIC CREATE PRIVATE.
   PRIVATE SECTION.
     DATA mi_client TYPE REF TO if_apc_wsp_client.
     DATA mv_on_message TYPE xstring.
-    METHODS send IMPORTING iv_message TYPE xstring.
+    METHODS send
+      IMPORTING
+        iv_message TYPE xstring
+      RAISING
+        cx_apc_error.
 ENDCLASS.
 
 CLASS zcl_ap_pulsar IMPLEMENTATION.
