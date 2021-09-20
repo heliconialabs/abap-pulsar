@@ -7,7 +7,7 @@ CLASS ltcl_test IMPLEMENTATION.
   METHOD test1.
     DATA(li_pulsar) = zcl_ap_pulsar=>connect(
       iv_host = 'localhost'
-      iv_port = 6650 ).
+      iv_port = '6650' ).
 
 * send connect command
     li_pulsar->connect( ).
