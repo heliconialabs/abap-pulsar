@@ -5,7 +5,7 @@ CLASS zcl_ap_pulsar DEFINITION PUBLIC CREATE PRIVATE.
     CLASS-METHODS connect
       IMPORTING
         iv_host TYPE string
-        iv_port TYPE i
+        iv_port TYPE string
       RETURNING
         VALUE(ri_pulsar) TYPE REF TO zif_ap_pulsar
       RAISING
