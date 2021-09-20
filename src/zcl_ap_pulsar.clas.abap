@@ -75,7 +75,7 @@ CLASS ZCL_AP_PULSAR IMPLEMENTATION.
     DATA li_message_manager TYPE REF TO if_apc_wsp_message_manager.
     DATA li_message         TYPE REF TO if_apc_wsp_message.
 
-    li_message_manager = mi_client->get_message_manager( ).
+    li_message_manager ?= mi_client->get_message_manager( ).
     li_message = li_message_manager->create_message( ).
     li_message->set_binary( iv_message ).
     li_message_manager->send( li_message ).
