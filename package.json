@@ -7,7 +7,7 @@
     "lint": "abaplint",
     "unit": "rm -rf output && abap_transpile && echo RUNNING && node output/index.mjs",
     "test": "npm run lint && npm run downport && npm run unit",
-    "downport": "rm -rf downport && rm -rf deps2 && git clone --quiet https://github.com/heliconialabs/abap-protobuf deps2 && cp deps2/src -r downport && cp src/* -r downport && rm downport/zcl_protobuf*testclasses* && abaplint --fix abaplint_downport.json",
+    "downport": "rm -rf downport && rm -rf deps2 && git clone --quiet https://github.com/heliconialabs/abap-protobuf deps2 && cp deps2/src -r downport && cp src/* -r downport && rm downport/*/zcl_protobuf*testclasses* && abaplint --fix abaplint_downport.json",
     "integration:setup": "ts-node ./test/setup.ts"
   },
   "repository": {
@@ -21,13 +21,13 @@
   },
   "homepage": "https://github.com/heliconialabs/abap-pulsar#readme",
   "devDependencies": {
-    "@abaplint/cli": "^2.81.2",
-    "@abaplint/runtime": "^1.6.65",
-    "@abaplint/transpiler-cli": "^1.6.65",
-    "@types/node": "^16.11.9",
-    "ts-node": "^10.4.0"
+    "@abaplint/cli": "^2.102.29",
+    "@abaplint/runtime": "^2.7.83",
+    "@abaplint/transpiler-cli": "^2.7.83",
+    "@types/node": "^20.5.7",
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
-    "typescript": "^4.5.2"
+    "typescript": "^5.2.2"
   }
 }
