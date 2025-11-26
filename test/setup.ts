@@ -32,7 +32,7 @@ console.log(`Setting up pulsar standalone`);
 
   console.log(`Creating pulsar via docker-compose from path ${dockerComposeFilePath}`);
 
-  asyncExec(`docker-compose -f ${dockerComposeFilePath} up --build`)
+  asyncExec(`docker compose -f ${dockerComposeFilePath} up --build`)
     .then((m) => {console.dir(m); console.log('docker-compose gracefully shut down');})
     .catch((e) => console.log(`docker-compose killed ${e}`));
 
