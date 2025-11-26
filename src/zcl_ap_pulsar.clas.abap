@@ -27,7 +27,7 @@ CLASS ZCL_AP_PULSAR IMPLEMENTATION.
 
 
   METHOD connect.
-    DATA ls_frame TYPE if_abap_channel_types=>ty_apc_tcp_frame.
+    DATA ls_frame TYPE apc_tcp_frame.
 
     DATA(lo_pulsar) = NEW zcl_ap_pulsar( ).
 
